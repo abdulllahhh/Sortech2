@@ -1,5 +1,8 @@
+using Application.DependencyInjection;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Presentation.DependencyInjection;
+using Presentation.Middleware;
 
 namespace Presentation
 {
@@ -13,12 +16,14 @@ namespace Presentation
             builder.Services.AddSingleton(TimeProvider.System);
 
             builder.Services.AddAuthorization();
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure();
 
             builder.Services.AddControllers();
 
             builder.Services
                .AddFastEndpoints()
-               .SwaggerDocument(o =>                    // ← FastEndpoints.Swagger
+               .SwaggerDocument(o =>
                {
                    o.DocumentSettings = s =>
                    {
@@ -39,7 +44,7 @@ namespace Presentation
 
             var app = builder.Build();
 
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
 
             app.UseHttpsRedirection();
@@ -47,8 +52,6 @@ namespace Presentation
             app.UseStaticFiles();
 
             app.UseFastEndpoints()
-                .UseAuthentication()
-                .UseAuthorization()
                 .UseSwaggerGen();
 
             app.MapControllers();

@@ -1,7 +1,7 @@
 ﻿using Application.DTO;
 using FastEndpoints;
 
-namespace Presentation.Controllers.Endpoints
+namespace Presentation.Endpoints
 {
     public class WeatherForcastEndpoint : Endpoint<MyRequest, MyResponse>
     {
