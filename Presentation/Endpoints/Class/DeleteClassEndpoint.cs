@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Class;
 using Application.Interfaces.Services;
+using Application.Validators;
 using FastEndpoints;
 using Infrastructure.Data;
 
@@ -17,6 +18,7 @@ namespace Presentation.Endpoints.Class
         public override void Configure()
         {
             Delete("/api/classes/{id}");
+            Validator<DeleteClassValidator>();
             AllowAnonymous();
         }
 

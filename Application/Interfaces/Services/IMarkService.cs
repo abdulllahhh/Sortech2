@@ -14,5 +14,6 @@ namespace Application.Interfaces.Services
         Task<EnrolmentResponse> EnrollStudentAsync(EnrollStudentRequest request);
         Task<MarkResponse> RecordMarkAsync(RecordMarkRequest request);
         Task<StudentReportResponse> GetStudentReportAsync(int studentId);
+        //Task<IEnumerable<StudentReportResponse>> GetAllStudentReportAsync();
     }
 }

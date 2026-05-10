@@ -1,5 +1,6 @@
 ﻿using Application.DTO.Student;
 using Application.Interfaces.Services;
+using Application.Validators;
 using FastEndpoints;
 using Infrastructure.Data;
 
@@ -17,6 +18,7 @@ namespace Presentation.Endpoints.Students
         public override void Configure()
         {
             Get("/api/students/{id}");
+            Validator<GetStudentByIdValidator>();
             AllowAnonymous();
         }
 

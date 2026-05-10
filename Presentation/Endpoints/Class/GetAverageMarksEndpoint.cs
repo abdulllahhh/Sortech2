@@ -1,11 +1,13 @@
 ﻿using Application.DTO.Class;
+using Application.DTO.Mark;
 using Application.Interfaces.Services;
+using Application.Validators;
 using FastEndpoints;
 using Infrastructure.Data;
 
 namespace Presentation.Endpoints.Class
 {
-    public class GetAverageMarksEndpoint : Endpoint<GetAverageMarksRequest, object>
+    public class GetAverageMarksEndpoint : Endpoint<GetAverageMarksRequest, AverageMarksResponse>
     {
         private readonly IClassService _classService;
 
@@ -17,13 +19,14 @@ namespace Presentation.Endpoints.Class
         public override void Configure()
         {
             Get("/api/classes/{classId}/average-marks");
+            Validator<GetAverageMarksValidator>();
             AllowAnonymous();
         }
 
         public override async Task HandleAsync(GetAverageMarksRequest req, CancellationToken ct)
         {
             var result = await _classService.GetAverageMarksAsync(req.ClassId);
-            await Send.OkAsync(new { classId = req.ClassId, averageMark = result }, cancellation: ct);
+            await Send.OkAsync(new AverageMarksResponse { ClassId = req.ClassId, AvgMark = result }, cancellation: ct);
         }
     }
 }

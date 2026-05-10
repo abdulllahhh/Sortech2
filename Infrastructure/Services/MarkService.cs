@@ -72,6 +72,9 @@ namespace Infrastructure.Services
             var enrolment = _enrolmentRepository.Get(e => e.StudentId == request.StudentId && e.ClassId == request.ClassId).FirstOrDefault();
             if (enrolment == null) throw new Exception("Student is not enrolled in this class.");
 
+            var markduplicate = _markRepository.Get(e => e.StudentId == request.StudentId && e.ClassId == request.ClassId).FirstOrDefault();
+            if (markduplicate != null) throw new Exception("Student Has mark for this class");
+
             var mark = new Mark
             {
                 Id = InMemoryDataStore.GetNextMarkId(),
@@ -128,6 +131,16 @@ namespace Infrastructure.Services
 
             return report;
         }
+
+        //public Task<IEnumerable<StudentReportResponse>> GetAllStudentReportAsync()
+        //{
+        //    var enrolments = _enrolmentRepository.GetAll().GroupBy(s => s.StudentId);
+        //    return enrolments.Select(g => new StudentReportResponse
+        //    {
+        //        EnrolledClasses = _classRepository.GetAll().Where(cs => cs.Id == g.Key.ClassId).ToList()
+        //    });
+        //    //var marks = _markRepository.Get(m => m.StudentId == studentId);
+        //}
     }
 }
 

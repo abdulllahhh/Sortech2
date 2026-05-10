@@ -25,7 +25,7 @@ namespace Presentation.Endpoints.Students
         public override async Task HandleAsync(UpdateStudentRequest req, CancellationToken ct)
         {
             await _studentService.UpdateStudentAsync(req.Id, req);
-            await Send.NoContentAsync(ct);
+            await Send.OkAsync(ct);
         }
     }
 }
